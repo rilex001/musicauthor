@@ -10,10 +10,6 @@ class MusicApi extends Component{
         }
     }
 
-    componentDidMount(){
-        
-    }
-
     handleChange = (e) => {
         this.setState({
             artist: e.target.value
@@ -33,30 +29,30 @@ class MusicApi extends Component{
     .then(result => {
             this.setState({
             song : result.data,
-            artistpicture: result.data[0].artist.picture_medium
-            })
-            // console.log(result.data[i].title_short)
-        
-        
+            artistpicture: result.data[0].artist.picture_medium,
+            artist: ''
+            })        
     })
     .catch(err => {
 	    console.log(err);
     });
-
-    
     }
 
     render(){
         const { song } = this.state
         const { artistpicture } = this.state
-        const songList = song.map(item => {
+        const songList = song.length ? (
+            song.map(item => {
             return(
                 <div className='container' key={item.id}>
                     <p>{item.title_short}</p>
                 </div>
-                
+             
             )
         })
+        ) : (
+            <p>Artist dont exist</p>
+        )
         return(
             <div>
             <form onSubmit={this.handleSubmit}>
@@ -67,11 +63,12 @@ class MusicApi extends Component{
                 type='text'>
                 </input>
             </form>
-            
-            <img src={artistpicture}></img>
-            <div>
-                {songList}
-            </div>
+                <div className='container'>
+                    <img src={artistpicture} alt=''></img>
+                        <div className='songlist'>
+                            {songList}
+                        </div>
+                </div>
             </div>
         )
     }

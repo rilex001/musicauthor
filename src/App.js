@@ -6,6 +6,7 @@ import MusicApi from './component/MusicApi'
 function App() {
   return (
     <div className="App">
+      <h2>Dezzer Api</h2>
       <MusicApi />
     </div>
   );
